@@ -1,27 +1,54 @@
 {
-  "name": "@atomic-reactor/markdown-to-jsx",
-  "version": "1.0.0",
-  "description": "Component that takes plain text markdown and parses it into JSX",
-  "main": "lib/index.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/ReactiumCore/markdown-to-jsx.git"
-  },
-  "keywords": [
-    "markdown",
-    "react",
-    "jsx"
-  ],
-  "author": "Cam Tullos <cam@reactium.io>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ReactiumCore/markdown-to-jsx/issues"
-  },
-  "homepage": "https://github.com/ReactiumCore/markdown-to-jsx#readme"
+    "name": "@atomic-reactor/markdown-to-jsx",
+    "version": "0.0.1",
+    "description": "Component that takes plain text markdown and parses it into JSX",
+    "type": "module",
+    "source": "src/index.js",
+    "main": "lib/markdown-to-jsx.cjs",
+    "module": "lib/markdown-to-jsx.js",
+    "unpkg": "lib/markdown-to-jsx.umd.js",
+    "exports": {
+        "require": "./lib/markdown-to-jsx.cjs",
+        "default": "./lib/markdown-to-jsx.modern.js"
+    },
+    "directories": {
+        "lib": "lib"
+    },
+    "scripts": {
+        "build": "microbundle",
+        "dev": "microbundle watch",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "lint-staged": {
+        "*.{js,json,jsx,css,md}": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/ReactiumCore/markdown-to-jsx.git"
+    },
+    "keywords": [
+        "markdown",
+        "react",
+        "jsx"
+    ],
+    "author": "Cam Tullos <cam@reactium.io>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ReactiumCore/markdown-to-jsx/issues"
+    },
+    "homepage": "https://github.com/ReactiumCore/markdown-to-jsx#readme",
+    "devDependencies": {
+        "microbundle": "^0.15.1",
+        "prettier": "^3.2.5"
+    },
+    "dependencies": {
+        "dompurify": "^3.0.11",
+        "jsdom": "^24.0.0",
+        "marked": "^12.0.1",
+        "prop-types": "^15.8.1",
+        "react-jsx-parser": "^1.29.0"
+    }
 }
