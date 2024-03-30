@@ -12,7 +12,7 @@
   "scripts": {
     "test": "jest",
     "clean": "del-cli ./lib",
-    "prepublishOnly": "npm version patch",
+    "prepublishOnly": "npm version patch && npm run build",
     "build": "npm-run-all clean build:*",
     "build:lib": "cross-env NODE_ENV=production babel ./src/index.js --out-file ./lib/markdown-to-jsx.js --ignore __tests__",
     "build:umd": "cross-env NODE_ENV=production webpack ./src/index.js --output-path ./umd/markdown-to-jsx.js",
