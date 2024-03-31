@@ -6,7 +6,7 @@ import JsxParser from 'react-jsx-parser';
 
 export const MarkdownJSXParser = (str) => {
     // trim the whitespace
-    let plain = String(str).replace(/\n\s+/gm, '\n').trim();
+    let plain = String(str).replace(/\n\s+/gm, '\n\n').trim();
 
     // apply preparsers
     plain = MarkdownJSX.preparsers.list.reduce((s, item) => {
