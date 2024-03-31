@@ -7,13 +7,12 @@ import JsxParser from 'react-jsx-parser';
 export const MarkdownJSXParser = (str) => {
     // trim the whitespace
     let plain = String(str).replace(/\n\s+/gm, '\n').trim();
-    
+
     // apply preparsers
     plain = MarkdownJSX.preparsers.list.reduce((s, item) => {
         const { match, replace } = item;
         return match && replace ? String(s).replace(match, replace).trim() : s;
     }, plain);
-
 
     // convert to markdown and apply replacers
     const markdown = MarkdownJSX.replacers.list.reduce((s, item) => {
@@ -29,6 +28,7 @@ export const MarkdownJSX = ({ value, ...props }) => (
 );
 
 MarkdownJSX.propTypes = {
+    className: PropTypes.string,
     value: PropTypes.string.isRequired,
     renderInWrapper: PropTypes.bool,
     renderUnrecognized: PropTypes.func,

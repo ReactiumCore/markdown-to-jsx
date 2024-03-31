@@ -34,9 +34,8 @@ const MyComponent = () => {
 | Property           | Type       | Description                                                                  | Default |
 | ------------------ | ---------- | ---------------------------------------------------------------------------- | ------- |
 | value              | `String`   | **Required.** The plain-text to be parsed to JSX                             |         |
-| plainTextParser    | `Function` | Function that returns a modified version of the value string                 |         |
-| renderInWrapper    | `Boolean`  | If true, the HTML output will have a <div> wrapper                           | `false` |
 | className          | `String`   | Space-delimited classes to add to wrapper (ignored if renderInWrapper=false) |         |
+| renderInWrapper    | `Boolean`  | If true, the HTML output will have a <div> wrapper                           | `false` |
 | renderUnrecognized | `Function` | Unrecognized tags are rendered via this method                               |         |
 
 ## Static Properties
@@ -157,4 +156,19 @@ MarkdownJSX.replacers.unprotect('heading').unregister('heading');
 
 // Is it gone now? Yep!
 console.log('Gone?', !MarkdownJSX.replacers.get('heading'));
+```
+
+## MarkdownJSXParser()
+
+If you need to parse markdown without rendering it you can import MarkdownJSXParser.
+
+```
+import { MarkdownJSXParser } from @atomic-reactor/markdown-to-jsx
+
+const markdown = MarkdownJSXParser('# Something');
+
+console.log(markdown);
+
+// output:
+// <h1>Something</h1>
 ```
