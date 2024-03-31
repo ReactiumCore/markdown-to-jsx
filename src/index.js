@@ -1,49 +1,35 @@
 import React from 'react';
 import { marked } from 'marked';
 import PropTypes from 'prop-types';
+import { Registry } from './Registry';
 import JsxParser from 'react-jsx-parser';
 
-export const MarkdownJSX = ({
-    value,
-    markdownParser,
-    plainTextParser,
-    ...props
-}) => {
-    const parser = (str) => {
-        let plain = String(str).trim();
+export const MarkdownJSXParser = (str) => {
+    // trim the whitespace
+    let plain = String(str).replace(/\n\s+/gm, '\n').trim();
+    
+    // apply preparsers
+    plain = MarkdownJSX.preparsers.list.reduce((s, item) => {
+        const { match, replace } = item;
+        return match && replace ? String(s).replace(match, replace).trim() : s;
+    }, plain);
 
-        if (plainTextParser && typeof plainTextParser === 'function') {
-            plain = plainTextParser(plain, marked);
-        }
 
-        const ids = [];
-        const replacers = Array.from(MarkdownJSX.replacers).filter(({ id }) => {
-            if (id && !ids.includes(id)) {
-                ids.push(id);
-                return true;
-            }
+    // convert to markdown and apply replacers
+    const markdown = MarkdownJSX.replacers.list.reduce((s, item) => {
+        const { match, replace } = item;
+        return match && replace ? String(s).replace(match, replace).trim() : s;
+    }, marked.parse(plain));
 
-            return false;
-        });
-
-        let markdown = marked.parse(plain);
-
-        markdown = replacers.reduce((s, item) => {
-            if (item.match && item.replace) {
-                s = String(s).replace(item.match, item.replace);
-            }
-            return s;
-        }, markdown);
-
-        return markdown;
-    };
-
-    return <JsxParser {...props} jsx={parser(value)} />;
+    return markdown;
 };
+
+export const MarkdownJSX = ({ value, ...props }) => (
+    <JsxParser {...props} jsx={MarkdownJSXParser(value)} />
+);
 
 MarkdownJSX.propTypes = {
     value: PropTypes.string.isRequired,
-    plainTextParser: PropTypes.func,
     renderInWrapper: PropTypes.bool,
     renderUnrecognized: PropTypes.func,
 };
@@ -52,10 +38,5 @@ MarkdownJSX.defaultProps = {
     renderInWrapper: false,
 };
 
-MarkdownJSX.replacers = [];
-
-MarkdownJSX.replacers.push({
-    id: 'heading',
-    match: /<h([1-6])>(.+)<\/h[1-6]>/gim,
-    replace: '<h$1><span>$2</span></h$1>',
-});
+MarkdownJSX.replacers = new Registry('MARKDOWNJSXREPLACERS');
+MarkdownJSX.preparsers = new Registry('MARKDOWNJSXPARSERS');
