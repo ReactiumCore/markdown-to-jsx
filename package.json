@@ -1,6 +1,6 @@
 {
     "name": "@atomic-reactor/markdown-to-jsx",
-    "version": "0.0.25",
+    "version": "0.0.26",
     "description": "Component that takes plain text markdown and parses it into JSX",
     "source": "src/index.js",
     "main": "lib/markdown-to-jsx.js",
