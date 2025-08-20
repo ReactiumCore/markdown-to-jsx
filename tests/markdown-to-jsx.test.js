@@ -1,4 +1,3 @@
-import React from 'react';
 import { MarkdownJSX } from '../src';
 import renderer from 'react-test-renderer';
 
