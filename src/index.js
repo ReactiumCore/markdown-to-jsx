@@ -1,4 +1,3 @@
-import React from 'react';
 import { marked } from 'marked';
 import PropTypes from 'prop-types';
 import { Registry } from './Registry';
